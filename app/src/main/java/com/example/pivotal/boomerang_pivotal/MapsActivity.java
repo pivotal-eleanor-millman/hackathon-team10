@@ -1,8 +1,12 @@
 package com.example.pivotal.boomerang_pivotal;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.pivotal.boomerang_pivotal.service.NetworkCallTask;
+import com.example.pivotal.boomerang_pivotal.util.NetworkUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -12,7 +16,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private final static String URL_NEARBY = "https://boomerang.cfapps.io/nearby";
+
     private GoogleMap mMap;
+    private String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +29,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
 
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        getNearbyOpportunities(connectivityManager);
+    }
 
     /**
      * Manipulates the map once available.
@@ -42,5 +52,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    private void getNearbyOpportunities(ConnectivityManager connectivityManager) {
+        //TODO: Get GPS location
+        String latitude = "43.650596";
+        String longitude = "-79.374934";
+        String radius = "4000";
+
+        if (NetworkUtils.isNetworkAvailable(connectivityManager) && NetworkUtils.isOnline()) {
+            String url = URL_NEARBY + "?latitude=" + latitude +
+                    "&longitude=" + longitude + "&radius=" + radius;
+            new NetworkCallTask(result).execute(url);
+
+            System.out.println(">>>>>> Activity: " + result);
+        } else {
+            //FIXME: handle
+            System.out.println("error");
+        }
     }
 }
