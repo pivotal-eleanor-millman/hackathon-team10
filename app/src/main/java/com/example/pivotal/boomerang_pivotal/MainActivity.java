@@ -1,5 +1,6 @@
 package com.example.pivotal.boomerang_pivotal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -48,5 +49,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onWantToHelp(View view) {
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
+    }
+
+    public void onNeedHelp(View view) {
+        Intent intent = new Intent(this, HelpRequestActivity.class);
+        startActivity(intent);
     }
 }

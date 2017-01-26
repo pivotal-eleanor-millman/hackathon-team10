@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Boomerang-Pivotal</string>
     <string name="action_settings">Settings</string>
+    <string name="want_to_help">I want to help</string>
+    <string name="need_help">I need some help</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_help_request">HelpRequestActivity</string>
+
 </resources>
