@@ -8,4 +8,5 @@
     <string name="need_help_description">Take a picture of a task you need help with and wait for someone from your neighborhood to help you with your task.</string>
     <string name="want_to_help_description">Have a couple hours to spare or even as little as 15 minutes?  Take a look around your neighborhood to help the people you live with whatever time you have to spare.</string>
     <string name="cta">Let\'s Go!</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

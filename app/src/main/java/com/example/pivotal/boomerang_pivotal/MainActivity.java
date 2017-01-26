@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onWantToHelpLayoutClicked(View view) {
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 }
