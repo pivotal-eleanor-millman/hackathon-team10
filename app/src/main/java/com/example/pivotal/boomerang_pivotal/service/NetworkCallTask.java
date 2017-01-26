@@ -2,6 +2,11 @@ package com.example.pivotal.boomerang_pivotal.service;
 
 import android.os.AsyncTask;
 
+import com.example.pivotal.boomerang_pivotal.model.Opportunity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +50,42 @@ public class NetworkCallTask extends AsyncTask<String, Void, String> {
 
     // Fires after the task is completed, displaying the bitmap into the ImageView
     @Override
-    protected void onPostExecute(String result) {
-        System.out.println(">>>>>>>>>>> Network Task: " + result);
+    protected void onPostExecute(String json) {
+        System.out.println(">>>>>>>>>>> Network Task: " + json);
+        Opportunity result = null;
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            result = getOpportunityFromParsedJson(jsonObject);
+
+            if (result == null) {
+                System.out.println(">>>>>>>>>>> Sth bad happened ");
+            }
+            System.out.println(">>>>>>>>>>> title: " + result.getTitle());
+            System.out.println(">>>>>>>>>>> address: " + result.getAddress());
+            System.out.println(">>>>>>>>>>> description: " + result.getDescription());
+            System.out.println(">>>>>>>>>>> hours: " + result.getHours());
+            System.out.println(">>>>>>>>>>> latitude: " + result.getLatitude());
+            System.out.println(">>>>>>>>>>> longitude: " + result.getLongitude());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private Opportunity getOpportunityFromParsedJson(JSONObject jsonObject) {
+        try {
+            Opportunity opportunity = new Opportunity();
+            opportunity.setTitle(jsonObject.getString("title"));
+            opportunity.setAddress(jsonObject.getString("address"));
+            opportunity.setDescription(jsonObject.getString("description"));
+            opportunity.setHours(jsonObject.getString("hours"));
+            opportunity.setLatitude(jsonObject.getDouble("latitude"));
+            opportunity.setLongitude(jsonObject.getDouble("longitude"));
+
+            return opportunity;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

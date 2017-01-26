@@ -1,12 +1,15 @@
 package com.example.pivotal.boomerang_pivotal.model;
 
-public class JsonObject {
+public class Opportunity {
     String title;
     String address;
     String hours;
     String description;
-    Float latitude;
-    Float longitude;
+    Double latitude;
+    Double longitude;
+
+    public Opportunity() {
+    }
 
     public String getTitle() {
         return title;
@@ -40,19 +43,19 @@ public class JsonObject {
         this.description = description;
     }
 
-    public Float getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public Float getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }
