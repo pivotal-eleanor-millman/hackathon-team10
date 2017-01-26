@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,13 +19,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LinearLayout needHelpLayout = (LinearLayout) findViewById(R.id.need_help_layout);
+        needHelpLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                onNeedHelpLayoutClicked(v);
+            }
+        });
+
+        LinearLayout wantToHelpLayout = (LinearLayout) findViewById(R.id.want_help_layout);
+        wantToHelpLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onWantToHelpLayoutClicked(v);
             }
         });
     }
@@ -51,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onWantToHelp(View view) {
-        Intent intent = new Intent(this, MapActivity.class);
+    public void onNeedHelpLayoutClicked(View view) {
+        Intent intent = new Intent(this, HelpRequestActivity.class);
         startActivity(intent);
     }
 
-    public void onNeedHelp(View view) {
-        Intent intent = new Intent(this, HelpRequestActivity.class);
+    public void onWantToHelpLayoutClicked(View view) {
+        Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
     }
 }
