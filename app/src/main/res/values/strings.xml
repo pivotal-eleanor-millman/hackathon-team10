@@ -5,5 +5,6 @@
     <string name="need_help">I need some help</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_help_request">HelpRequestActivity</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
