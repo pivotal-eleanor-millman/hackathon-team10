@@ -37,7 +37,12 @@ public class HelpRequestActivity extends AppCompatActivity {
         EditText locationView = (EditText) findViewById(R.id.location_edit);
         String location = locationView.getText().toString();
 
-        new NetworkPostTask().execute("https://boomerang.cfapps.io/opportunity");
+        new NetworkPostTask().execute("https://boomerang.cfapps.io/opportunity/post?" +
+                "description=" + note +
+                "&title=" + title +
+                "&hours=" + hours +
+                "&location=" + location
+        );
 
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
