@@ -1,6 +1,7 @@
 package com.example.pivotal.boomerang_pivotal.service;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 
@@ -17,6 +18,7 @@ import java.net.URL;
 public class NetworkCallTask extends AsyncTask<String, Void, String> {
 
     String result;
+    public INetworkCallTask delegate = null;
 
     public NetworkCallTask(String result) {
         this.result = result;
@@ -48,24 +50,26 @@ public class NetworkCallTask extends AsyncTask<String, Void, String> {
         return total.toString();
     }
 
-    // Fires after the task is completed, displaying the bitmap into the ImageView
     @Override
     protected void onPostExecute(String json) {
-        System.out.println(">>>>>>>>>>> Network Task: " + json);
-        Opportunity result = null;
         try {
             JSONObject jsonObject = new JSONObject(json);
-            result = getOpportunityFromParsedJson(jsonObject);
+            Opportunity opportunity = getOpportunityFromParsedJson(jsonObject);
 
-            if (result == null) {
-                System.out.println(">>>>>>>>>>> Sth bad happened ");
+            if (opportunity == null) {
+                //FIXME: Handle this case
+                System.out.println("result null");
             }
-            System.out.println(">>>>>>>>>>> title: " + result.getTitle());
-            System.out.println(">>>>>>>>>>> address: " + result.getAddress());
-            System.out.println(">>>>>>>>>>> description: " + result.getDescription());
-            System.out.println(">>>>>>>>>>> hours: " + result.getHours());
-            System.out.println(">>>>>>>>>>> latitude: " + result.getLatitude());
-            System.out.println(">>>>>>>>>>> longitude: " + result.getLongitude());
+
+            if (delegate != null)
+            {
+                delegate.postResult(opportunity);
+            } else {
+                //FIXME: Handle this case
+                System.out.println("delegate null");
+            }
+
+            System.out.println(">>>>>>>>>>> title: " + opportunity.getTitle());
         } catch (JSONException e) {
             e.printStackTrace();
         }
