@@ -19,10 +19,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 import com.example.pivotal.boomerang_pivotal.service.INetworkCallTask;
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
     Location mCurrentLocation = new Location("");
     Opportunity mNearestOpportunity = new Opportunity();
     Opportunity mLatestOpportunity;
+
+    Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
