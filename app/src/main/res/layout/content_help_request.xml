@@ -11,10 +11,59 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.pivotal.boomerang_pivotal.HelpRequestActivity"
     tools:showIn="@layout/activity_help_request">
-
-    <TextView
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is the help request"/>
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/title_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_default"
+            android:drawableLeft="@mipmap/ic_help_black"
+            android:drawablePadding="20dp"
+            android:padding="25dp"/>
+        <EditText
+            android:id="@+id/location_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/address_default"
+            android:drawableLeft="@mipmap/ic_location"
+            android:drawablePadding="20dp"
+            android:padding="25dp"/>
+        <EditText
+            android:id="@+id/person_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username_default"
+            android:drawableLeft="@mipmap/ic_person"
+            android:drawablePadding="20dp"
+            android:padding="25dp"/>
+        <EditText
+            android:id="@+id/time_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/time_default"
+            android:drawableLeft="@mipmap/ic_time"
+            android:drawablePadding="20dp"
+            android:padding="25dp"/>
+        <EditText
+            android:id="@+id/note_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/description_default"
+            android:drawableLeft="@mipmap/ic_note"
+            android:drawablePadding="20dp"
+            android:padding="25dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ask_for_help_button"
+            android:background="@color/colorPrimary"
+            android:onClick="onAskForHelpClicked"/>
+    </LinearLayout>
+</ScrollView>
 </RelativeLayout>
