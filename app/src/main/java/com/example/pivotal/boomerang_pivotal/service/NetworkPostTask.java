@@ -50,33 +50,67 @@ public class NetworkPostTask extends AsyncTask<String, String, String> {
 //                in.close();
         }
         return total.toString();
+    }
 
+//    public NetworkPostTask() {
+//
+//    }
+//
+//    @Override
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//    }
+//
+//
+//    @Override
+//    protected String doInBackground(String... params) {
+//
+//        String urlString = params[0]; // URL to call
+//
+//        String resultToDisplay = "";
+//        StringBuilder total = new StringBuilder();
+//
+//
+//        InputStream in = null;
 //        try {
-//            URL url = new URL("https://boomerang.cfapps.io/opportunity"); //Enter URL here
-//            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-//            httpURLConnection.setDoOutput(true);
-//            httpURLConnection.setRequestMethod("POST"); // here you are telling that it is a POST request, which can be changed into "PUT", "GET", "DELETE" etc.
-//            httpURLConnection.setRequestProperty("Content-Type", "application/json"); // here you are setting the `Content-Type` for the data you are sending which is `application/json`
-//            httpURLConnection.connect();
 //
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("para_1", "arg_1");
+//            URL url = new URL(urlString);
 //
-//            DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-//            wr.writeBytes("hello");
-//            wr.flush();
-//            wr.close();
+//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 //
-//            httpURLConnection.getInputStream();
-
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
+//            in = new BufferedInputStream(urlConnection.getInputStream());
+//
+//
+//        } catch (Exception e) {
+//
+//            System.out.println(e.getMessage());
+//
+//            return e.getMessage();
+//
 //        }
 //
-//        return null;
+//        try {
+//            BufferedReader r = new BufferedReader(new InputStreamReader(in));
+//            String line;
+//
+//            while ((line = r.readLine()) != null) {
+//                total.append(line);
+//            }
+//            in.close();
+//            System.out.println(">>>>> Response: " + total.toString());
+//            //to [convert][1] byte stream to a string
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return total.toString();
+//    }
+//
+//
+//    @Override
+//    protected void onPostExecute(String result) {
+//        //Update the UI
+//        System.out.println("result " + result);
+//    }
+
     }
-}

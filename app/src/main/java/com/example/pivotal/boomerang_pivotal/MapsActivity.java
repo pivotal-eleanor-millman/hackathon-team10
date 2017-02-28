@@ -16,8 +16,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private final static String URL_NEARBY = "https://boomerang.cfapps.io/nearby";
-    private final static String URL_OPPORTUNITIES = "https://boomerang.cfapps.io/opportunities";
+//    private final static String URL_OPPORTUNITIES = "https://boomerang.cfapps.io/opportunities";
+    private final static String URL_OPPORTUNITIES = "http://10.74.18.122:8080/opportunities";
 
     private GoogleMap mMap;
     private String result;
@@ -48,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         LatLng pivotal = new LatLng(43.646739, -79.375116);
-        mMap.addMarker(new MarkerOptions().position(pivotal).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(pivotal).title("Pivotal"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pivotal));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pivotal,15));
 

@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,8 +25,7 @@ public class BoomerangController {
 
     @GetMapping("/opportunities")
     public ResponseEntity<List<Opportunity>> getOpportunities() {
-        List<Opportunity> opportunities = new ArrayList<>();
-        opportunities = repository.findAll();
+        List<Opportunity> opportunities = repository.findAll();
 
         return new ResponseEntity<>(opportunities, HttpStatus.OK);
     }
@@ -55,14 +53,17 @@ public class BoomerangController {
     public ResponseEntity addOpportunity(@RequestParam String title,
                                          @RequestParam String hours,
                                          @RequestParam String description,
-                                         @RequestParam String location) {
+                                         @RequestParam String location,
+                                         @RequestParam Double lat,
+                                         @RequestParam Double lon
+                                         ) {
         Opportunity opportunity = new Opportunity();
         opportunity.setAddress(location);
         opportunity.setDescription(description);
         opportunity.setHours(hours);
         opportunity.setTitle(title);
-        opportunity.setLatitude(43.650244);
-        opportunity.setLongitude(-79.376564);
+        opportunity.setLatitude(lat);
+        opportunity.setLongitude(lon);
         repository.save(opportunity);
         return new ResponseEntity(HttpStatus.OK);
     }

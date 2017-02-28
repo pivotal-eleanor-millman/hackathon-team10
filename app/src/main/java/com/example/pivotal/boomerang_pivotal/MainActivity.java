@@ -35,7 +35,8 @@ import com.example.pivotal.boomerang_pivotal.util.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity implements INetworkCallTask {
 
-    private final static String URL_NEARBY = "https://boomerang.cfapps.io/nearby";
+//    private final static String URL_NEARBY = "https://boomerang.cfapps.io/nearby";
+    private final static String URL_NEARBY = "http://10.74.18.122:8080/nearby";
 
     ConnectivityManager mConnectivityManager;
     LocationManager mLocationManager;
@@ -83,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
     }
 
     private void getNearestOpportunity() {
-        String latitude = String.valueOf(43.6534274);
-//        String latitude = String.valueOf(mCurrentLocation.getLatitude());
-//        String longitude = String.valueOf(mCurrentLocation.getLongitude());
-        String longitude = String.valueOf(-79.3777415);
+//        String latitude = String.valueOf(43.6534274);
+        String latitude = String.valueOf(mCurrentLocation.getLatitude());
+        String longitude = String.valueOf(mCurrentLocation.getLongitude());
+//        String longitude = String.valueOf(-79.3777415);
         String radius = "4000";
 
         if (NetworkUtils.isNetworkAvailable(mConnectivityManager) && NetworkUtils.isOnline()) {
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
 
     private void startNotificationChecks() {
         final Handler h = new Handler();
-        final int delay = 2000; //milliseconds
+        final int delay = 60000; //milliseconds
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
