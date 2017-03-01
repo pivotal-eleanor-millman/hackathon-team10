@@ -1,6 +1,5 @@
 package com.example.pivotal.boomerang_pivotal.util;
 
-import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 

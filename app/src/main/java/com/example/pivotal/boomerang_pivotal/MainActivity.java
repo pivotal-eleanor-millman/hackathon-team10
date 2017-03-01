@@ -10,7 +10,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
@@ -18,15 +17,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 import com.example.pivotal.boomerang_pivotal.service.INetworkCallTask;
@@ -84,10 +78,8 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
     }
 
     private void getNearestOpportunity() {
-//        String latitude = String.valueOf(43.6534274);
         String latitude = String.valueOf(mCurrentLocation.getLatitude());
         String longitude = String.valueOf(mCurrentLocation.getLongitude());
-//        String longitude = String.valueOf(-79.3777415);
         String radius = "4000";
 
         if (NetworkUtils.isNetworkAvailable(mConnectivityManager) && NetworkUtils.isOnline()) {
@@ -101,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
         } else {
             System.out.println("error");
         }
-//        return mTestOpportunity;
     }
 
     @Override
