@@ -26,14 +26,6 @@
             android:drawableLeft="@mipmap/ic_help_black"
             android:drawablePadding="20dp"
             android:padding="25dp"/>
-        <!--<EditText-->
-            <!--android:id="@+id/location_edit"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="@string/address_default"-->
-            <!--android:drawableLeft="@mipmap/ic_location"-->
-            <!--android:drawablePadding="20dp"-->
-            <!--android:padding="25dp"/>-->
         <fragment
             android:id="@+id/place_autocomplete_fragment"
             android:layout_width="match_parent"

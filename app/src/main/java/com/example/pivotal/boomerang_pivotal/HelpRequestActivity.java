@@ -81,7 +81,9 @@ public class HelpRequestActivity extends AppCompatActivity {
         opportunity.setTitle(title);
         opportunity.setDescription(note);
 
-        final Intent intent = new Intent(this, MapsActivity.class);
+        final Intent intent = new Intent(this, MyRequestsActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("description", note);
         ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
         Call<ResponseBody> call = apiService.createOpportunity(opportunity);
         call.enqueue(new Callback<ResponseBody>() {

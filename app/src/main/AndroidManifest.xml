@@ -31,6 +31,10 @@
             android:name=".HelpRequestActivity"
             android:label="@string/title_activity_help_request"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyRequestsActivity"
+            android:label="@string/title_activity_my_requests"
+            android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

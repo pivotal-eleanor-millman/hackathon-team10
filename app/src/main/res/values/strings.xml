@@ -3,9 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="want_to_help">I want to help!</string>
     <string name="need_help">I need help!</string>
-    <string name="title_activity_map">Help Requests</string>
     <string name="title_activity_maps">Help Requests</string>
     <string name="title_activity_help_request">"I need help" Post</string>
+    <string name="title_activity_my_requests">My Requests</string>
     <string name="need_help_description">Post a description of what you need help with and we\'ll let people know.</string>
     <string name="want_to_help_description">Have some time\?  Take a look at opportunities to help your neighbors.</string>
     <string name="cta">Let\'s Go!</string>
