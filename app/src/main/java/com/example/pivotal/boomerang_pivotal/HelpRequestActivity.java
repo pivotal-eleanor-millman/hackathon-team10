@@ -2,15 +2,13 @@ package com.example.pivotal.boomerang_pivotal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.pivotal.boomerang_pivotal.service.NetworkPostTask;
+import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -19,6 +17,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HelpRequestActivity extends AppCompatActivity {
 
@@ -65,20 +70,33 @@ public class HelpRequestActivity extends AppCompatActivity {
         EditText timeView = (EditText) findViewById(R.id.time_edit);
         String hours = timeView.getText().toString();
 
-        EditText personView = (EditText) findViewById(R.id.person_edit);
-        String user = personView.getText().toString();
+        String BASE_URL = "http://10.74.18.122:8080/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-//        new NetworkPostTask().execute("https://boomerang.cfapps.io/opportunity/post?" +
-        new NetworkPostTask().execute("http://10.74.18.122:8080/opportunity/post?" +
-                "description=" + note +
-                "&title=" + URLEncoder.encode(title, "utf-8") +
-                "&hours=" + hours +
-                "&location=" + URLEncoder.encode(locationName, "utf-8") +
-                "&lat=" + location.latitude +
-                "&lon=" + location.longitude
-        );
+        Opportunity opportunity = new Opportunity();
+        opportunity.setLatitude(location.latitude);
+        opportunity.setLongitude(location.longitude);
+        opportunity.setAddress(locationName);
+        opportunity.setHours(hours);
+        opportunity.setTitle(title);
+        opportunity.setDescription(note);
 
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        final Intent intent = new Intent(this, MapsActivity.class);
+        ApiEndpointInterface apiService = retrofit.create(ApiEndpointInterface.class);
+        Call<ResponseBody> call = apiService.createOpportunity(opportunity);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                Log.i("CreateOpportunity", "An error occurred: " + throwable.getLocalizedMessage());
+            }
+        });
     }
 }

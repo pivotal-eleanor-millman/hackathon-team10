@@ -28,10 +28,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapActivity"
-            android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".HelpRequestActivity"
             android:label="@string/title_activity_help_request"
             android:theme="@style/AppTheme.NoActionBar" />

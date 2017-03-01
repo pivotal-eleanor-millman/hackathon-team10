@@ -48,23 +48,4 @@ public class BoomerangController {
             return new ResponseEntity<>(nearbyOpportunity, HttpStatus.OK);
         }
     }
-
-    @GetMapping("/opportunity/post")
-    public ResponseEntity addOpportunity(@RequestParam String title,
-                                         @RequestParam String hours,
-                                         @RequestParam String description,
-                                         @RequestParam String location,
-                                         @RequestParam Double lat,
-                                         @RequestParam Double lon
-                                         ) {
-        Opportunity opportunity = new Opportunity();
-        opportunity.setAddress(location);
-        opportunity.setDescription(description);
-        opportunity.setHours(hours);
-        opportunity.setTitle(title);
-        opportunity.setLatitude(lat);
-        opportunity.setLongitude(lon);
-        repository.save(opportunity);
-        return new ResponseEntity(HttpStatus.OK);
-    }
 }

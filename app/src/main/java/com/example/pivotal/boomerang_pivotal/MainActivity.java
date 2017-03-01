@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
                         .setContentTitle("There is a new volunteer opportunity!")
                         .setContentText(mNearestOpportunity.getTitle());
 
-        Intent resultIntent = new Intent(this, MapActivity.class);
+        Intent resultIntent = new Intent(this, MapsActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
 
