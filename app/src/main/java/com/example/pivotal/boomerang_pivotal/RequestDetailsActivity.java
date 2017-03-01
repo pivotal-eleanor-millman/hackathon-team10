@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-public class MyRequestsActivity extends AppCompatActivity {
+public class RequestDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_requests);
+        setContentView(R.layout.activity_request_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -20,6 +20,10 @@ public class MyRequestsActivity extends AppCompatActivity {
             nameTextView.setText(params.getString("title"));
             TextView descriptionTextView = (TextView)findViewById(R.id.requestDescription);
             descriptionTextView.setText(params.getString("description"));
+            TextView addressTextView = (TextView)findViewById(R.id.requestAddress);
+            addressTextView.setText(params.getString("address"));
+            TextView hoursTextView = (TextView)findViewById(R.id.requestHours);
+            hoursTextView.setText(params.getString("hours"));
         }
     }
 }

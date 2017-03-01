@@ -2,6 +2,7 @@ package com.example.pivotal.boomerang_pivotal;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -41,13 +42,9 @@ public class MapsActivity extends AppCompatActivity
         LocationListener {
 
     private GoogleMap mMap;
-    private String result;
-    Marker currentLocationMarker;
-
-    SupportMapFragment mapFrag;
-    LocationRequest mLocationRequest;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
+    private LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +65,24 @@ public class MapsActivity extends AppCompatActivity
         }
         mMap.setMyLocationEnabled(true);
 
-        buildGoogleApiClient();
+        final Intent intent = new Intent(this, RequestDetailsActivity.class);
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Opportunity opportunity = (Opportunity) marker.getTag();
+                intent.putExtra("title", opportunity.getTitle());
+                intent.putExtra("address", opportunity.getAddress());
+                intent.putExtra("hours", opportunity.getHours());
+                intent.putExtra("description", opportunity.getDescription());
+                startActivity(intent);
+            }
+        });
 
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        getNearbyOpportunities(connectivityManager);
+        buildGoogleApiClient();
+        getNearbyOpportunities();
     }
 
-    private void getNearbyOpportunities(ConnectivityManager connectivityManager) {
+    private void getNearbyOpportunities() {
 
         String BASE_URL = "https://boomerang-ria.cfapps.io/";
         Retrofit retrofit = new Retrofit.Builder()
@@ -91,7 +98,12 @@ public class MapsActivity extends AppCompatActivity
             public void onResponse(Call<List<Opportunity>> call, Response<List<Opportunity>> response) {
                 for (Opportunity opportunity : response.body()) {
                     LatLng latLng = new LatLng(opportunity.getLatitude(), opportunity.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(latLng).title(opportunity.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                    Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .title(opportunity.getTitle())
+                            .snippet(opportunity.getDescription())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                    marker.setTag(opportunity);
                 }
             }
 
@@ -127,16 +139,12 @@ public class MapsActivity extends AppCompatActivity
     public void onLocationChanged(Location location)
     {
         mLastLocation = location;
-        if (currentLocationMarker != null) {
-            currentLocationMarker.remove();
-        }
-
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)      // Sets the center of the map to location user
-                .zoom(15)                   // Sets the zoom
-                .build();                   // Creates a CameraPosition from the builder
+                .target(latLng)
+                .zoom(15)
+                .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         //optionally, stop location updates if only current location is needed
