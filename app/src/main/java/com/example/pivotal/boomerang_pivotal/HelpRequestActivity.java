@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
+import com.example.pivotal.boomerang_pivotal.service.ApiEndpointService;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -66,7 +67,7 @@ public class HelpRequestActivity extends AppCompatActivity {
         EditText timeView = (EditText) findViewById(R.id.time_edit);
         String hours = timeView.getText().toString();
 
-        String BASE_URL = "http://10.74.18.122:8080/";
+        String BASE_URL = "https://boomerang-ria.cfapps.io/";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -81,7 +82,7 @@ public class HelpRequestActivity extends AppCompatActivity {
         opportunity.setDescription(note);
 
         final Intent intent = new Intent(this, MapsActivity.class);
-        ApiEndpointInterface apiService = retrofit.create(ApiEndpointInterface.class);
+        ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
         Call<ResponseBody> call = apiService.createOpportunity(opportunity);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

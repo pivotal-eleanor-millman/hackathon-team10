@@ -17,20 +17,22 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
-import com.example.pivotal.boomerang_pivotal.service.INetworkCallTask;
-import com.example.pivotal.boomerang_pivotal.service.NetworkCallTask;
-import com.example.pivotal.boomerang_pivotal.util.NetworkUtils;
+import com.example.pivotal.boomerang_pivotal.service.ApiEndpointService;
 
-public class MainActivity extends AppCompatActivity implements INetworkCallTask {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-//    private final static String URL_NEARBY = "https://boomerang.cfapps.io/nearby";
-    private final static String URL_NEARBY = "http://10.74.18.122:8080/nearby";
+public class MainActivity extends AppCompatActivity {
 
     ConnectivityManager mConnectivityManager;
     LocationManager mLocationManager;
@@ -72,27 +74,36 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
 
     }
 
-    public void postResult(Opportunity opportunity) {
-        mLatestOpportunity = opportunity;
-        System.out.println("Got result " + opportunity);
-    }
-
     private void getNearestOpportunity() {
-        String latitude = String.valueOf(mCurrentLocation.getLatitude());
-        String longitude = String.valueOf(mCurrentLocation.getLongitude());
-        String radius = "4000";
+        String BASE_URL = "https://boomerang-ria.cfapps.io/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        if (NetworkUtils.isNetworkAvailable(mConnectivityManager) && NetworkUtils.isOnline()) {
-            String url = URL_NEARBY + "?latitude=" + latitude +
-                    "&longitude=" + longitude + "&radius=" + radius;
-            NetworkCallTask networkCall = new NetworkCallTask(null);
-            networkCall.delegate = this;
-            networkCall.execute(url);
+        ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
+        Call<Opportunity> call = apiService.getNearestOpportunity(
+                mCurrentLocation.getLatitude(),
+                mCurrentLocation.getLongitude(),
+                4000);
+        call.enqueue(new Callback<Opportunity>() {
+            @Override
+            public void onResponse(Call<Opportunity> call, Response<Opportunity> response) {
+                mLatestOpportunity = response.body();
+                System.out.println("Getting latest opportunity");
 
-            System.out.println(">>>>>> Activity: ");
-        } else {
-            System.out.println("error");
-        }
+                if (mLatestOpportunity != null && !mLatestOpportunity.getTitle().equalsIgnoreCase(mNearestOpportunity.getTitle())) {
+                    System.out.println("Getting inside");
+                    mNearestOpportunity = mLatestOpportunity;
+                    makeNotification();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Opportunity> call, Throwable throwable) {
+                Log.i("GetNearestOpportunity", "An error occurred: " + throwable.getLocalizedMessage());
+            }
+        });
     }
 
     @Override
@@ -109,13 +120,6 @@ public class MainActivity extends AppCompatActivity implements INetworkCallTask 
             @Override
             public void run() {
                 getNearestOpportunity();
-                System.out.println("Getting latest opportunity");
-
-                if (mLatestOpportunity != null && !mLatestOpportunity.getTitle().equalsIgnoreCase(mNearestOpportunity.getTitle())) {
-                    System.out.println("Getting inside");
-                    mNearestOpportunity = mLatestOpportunity;
-                    makeNotification();
-                }
                 h.postDelayed(this, delay);
             }
         }, delay);

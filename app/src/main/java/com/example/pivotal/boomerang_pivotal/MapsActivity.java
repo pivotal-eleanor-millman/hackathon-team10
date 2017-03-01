@@ -9,9 +9,10 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import com.example.pivotal.boomerang_pivotal.service.MultipleObjectNetworkCallTask;
-import com.example.pivotal.boomerang_pivotal.util.NetworkUtils;
+import com.example.pivotal.boomerang_pivotal.model.Opportunity;
+import com.example.pivotal.boomerang_pivotal.service.ApiEndpointService;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -20,17 +21,24 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         LocationListener {
-
-    //    private final static String URL_OPPORTUNITIES = "https://boomerang.cfapps.io/opportunities";
-    private final static String URL_OPPORTUNITIES = "http://10.74.18.122:8080/opportunities";
 
     private GoogleMap mMap;
     private String result;
@@ -69,13 +77,29 @@ public class MapsActivity extends AppCompatActivity
 
     private void getNearbyOpportunities(ConnectivityManager connectivityManager) {
 
-        if (NetworkUtils.isNetworkAvailable(connectivityManager) && NetworkUtils.isOnline()) {
-            String url = URL_OPPORTUNITIES;
-            new MultipleObjectNetworkCallTask(result, mMap).execute(url);
-        } else {
-            //FIXME: handle
-            System.out.println("error");
-        }
+        String BASE_URL = "https://boomerang-ria.cfapps.io/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
+        Call<List<Opportunity>> call = apiService.getAllOpportunities();
+        call.enqueue(new Callback<List<Opportunity>>() {
+
+            @Override
+            public void onResponse(Call<List<Opportunity>> call, Response<List<Opportunity>> response) {
+                for (Opportunity opportunity : response.body()) {
+                    LatLng latLng = new LatLng(opportunity.getLatitude(), opportunity.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(latLng).title(opportunity.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Opportunity>> call, Throwable throwable) {
+                Log.i("GetAllOpportunities", "An error occurred: " + throwable.getLocalizedMessage());
+            }
+        });
     }
 
     protected synchronized void buildGoogleApiClient() {
