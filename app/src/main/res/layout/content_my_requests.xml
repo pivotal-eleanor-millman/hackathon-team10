@@ -28,18 +28,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:padding="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_vertical_margin"
+                android:paddingRight="@dimen/activity_vertical_margin"
+                android:text="Title"
                 android:textSize="30sp"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textColor="@android:color/black"
+                android:drawableRight="@mipmap/ic_edit"
+                android:drawablePadding="20dp"/>
             <TextView
                 android:id="@+id/requestDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:padding="@dimen/activity_vertical_margin"
+                android:text="Details"
                 android:textSize="20sp"
                 android:lineSpacingMultiplier="1.2"
                 android:textColor="@android:color/darker_gray"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Waiting for a Volunteer"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/black"
+                android:drawableLeft="@mipmap/ic_timelapse"
+                android:drawablePadding="20dp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
