@@ -2,12 +2,12 @@ package com.example.pivotal.boomerang_pivotal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 import com.example.pivotal.boomerang_pivotal.service.ApiEndpointService;
@@ -16,8 +16,9 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
+
 import java.io.UnsupportedEncodingException;
-import okhttp3.ResponseBody;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +35,9 @@ public class HelpRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help_request);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         // Fragment from Google to autocomplete location
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)

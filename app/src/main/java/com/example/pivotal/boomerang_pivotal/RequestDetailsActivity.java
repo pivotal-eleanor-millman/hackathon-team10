@@ -1,6 +1,7 @@
 package com.example.pivotal.boomerang_pivotal;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -13,6 +14,9 @@ public class RequestDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         Bundle params = getIntent().getExtras();
         if(params != null) {
