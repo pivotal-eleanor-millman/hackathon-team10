@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 mLatestOpportunity = response.body();
                 System.out.println("Getting latest opportunity");
 
-                if (mLatestOpportunity != null && !mLatestOpportunity.getTitle().equalsIgnoreCase(mNearestOpportunity.getTitle())) {
+                if (mLatestOpportunity != null && !mLatestOpportunity.getId().equals(mNearestOpportunity.getId())) {
                     System.out.println("Getting inside");
                     mNearestOpportunity = mLatestOpportunity;
                     makeNotification();

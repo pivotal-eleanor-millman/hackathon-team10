@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.pivotal.boomerang_pivotal.model.OpportunitiesResponse;
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 import com.example.pivotal.boomerang_pivotal.service.ApiEndpointService;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -91,12 +92,12 @@ public class MapsActivity extends AppCompatActivity
                 .build();
 
         ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
-        Call<List<Opportunity>> call = apiService.getAllOpportunities();
-        call.enqueue(new Callback<List<Opportunity>>() {
+        Call<OpportunitiesResponse> call = apiService.getAllOpportunities();
+        call.enqueue(new Callback<OpportunitiesResponse>() {
 
             @Override
-            public void onResponse(Call<List<Opportunity>> call, Response<List<Opportunity>> response) {
-                for (Opportunity opportunity : response.body()) {
+            public void onResponse(Call<OpportunitiesResponse> call, Response<OpportunitiesResponse> response) {
+                for (Opportunity opportunity : response.body().get_embedded().getOpportunities()) {
                     LatLng latLng = new LatLng(opportunity.getLatitude(), opportunity.getLongitude());
                     Marker marker = mMap.addMarker(new MarkerOptions()
                             .position(latLng)
@@ -108,7 +109,7 @@ public class MapsActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<List<Opportunity>> call, Throwable throwable) {
+            public void onFailure(Call<OpportunitiesResponse> call, Throwable throwable) {
                 Log.i("GetAllOpportunities", "An error occurred: " + throwable.getLocalizedMessage());
             }
         });

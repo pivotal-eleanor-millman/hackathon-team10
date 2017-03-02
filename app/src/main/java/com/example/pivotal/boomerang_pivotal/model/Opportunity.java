@@ -1,6 +1,9 @@
 package com.example.pivotal.boomerang_pivotal.model;
 
-public class Opportunity {
+import java.io.Serializable;
+
+public class Opportunity implements Serializable {
+    Integer id;
     String title;
     String address;
     String hours;
@@ -9,6 +12,14 @@ public class Opportunity {
     Double longitude;
 
     public Opportunity() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -59,3 +70,4 @@ public class Opportunity {
         this.longitude = longitude;
     }
 }
+

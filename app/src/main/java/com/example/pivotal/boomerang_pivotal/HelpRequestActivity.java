@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 import com.example.pivotal.boomerang_pivotal.service.ApiEndpointService;
 import com.google.android.gms.common.api.Status;
@@ -24,8 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HelpRequestActivity extends AppCompatActivity {
 
-    LatLng location;
-    String locationName;
+    Opportunity opportunity = new Opportunity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,10 @@ public class HelpRequestActivity extends AppCompatActivity {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i("PlaceAutocomplete", "Place: " + place.getName());
-                location = place.getLatLng();
-                locationName = place.getName().toString();
+                LatLng location = place.getLatLng();
+                opportunity.setLatitude(location.latitude);
+                opportunity.setLongitude(location.longitude);
+                opportunity.setAddress(place.getName().toString());
             }
 
             @Override
@@ -55,6 +56,7 @@ public class HelpRequestActivity extends AppCompatActivity {
                 Log.i("PlaceAutocomplete", "An error occurred: " + status);
             }
         });
+        prepopulateOpportunity(autocompleteFragment);
     }
 
     public void onAskForHelpClicked(View view) throws UnsupportedEncodingException {
@@ -73,29 +75,49 @@ public class HelpRequestActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Opportunity opportunity = new Opportunity();
-        opportunity.setLatitude(location.latitude);
-        opportunity.setLongitude(location.longitude);
-        opportunity.setAddress(locationName);
         opportunity.setHours(hours);
         opportunity.setTitle(title);
         opportunity.setDescription(note);
 
         final Intent intent = new Intent(this, MyRequestsActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("description", note);
         ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
-        Call<ResponseBody> call = apiService.createOpportunity(opportunity);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<Opportunity> call;
+
+        //Determine whether we should create or update
+        if (getCallingActivity() != null && getCallingActivity().equals(MyRequestsActivity.class)) {
+            call = apiService.updateOpportunity(opportunity, opportunity.getId());
+        } else {
+            call = apiService.createOpportunity(opportunity);
+        }
+        call.enqueue(new Callback<Opportunity>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Opportunity> call, Response<Opportunity> response) {
+                Opportunity opportunityResult = response.body();
+                intent.putExtra("opportunity", opportunityResult);
                 startActivity(intent);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<Opportunity> call, Throwable throwable) {
                 Log.i("CreateOpportunity", "An error occurred: " + throwable.getLocalizedMessage());
             }
         });
+    }
+
+    private void prepopulateOpportunity(PlaceAutocompleteFragment autocompleteFragment){
+        Bundle params = getIntent().getExtras();
+        if(params != null && params.getSerializable("opportunity") != null) {
+            opportunity = (Opportunity) params.getSerializable("opportunity");
+            EditText noteView = (EditText) findViewById(R.id.note_edit);
+            noteView.setText(opportunity.getDescription());
+
+            EditText titleView = (EditText) findViewById(R.id.title_edit);
+            titleView.setText(opportunity.getTitle());
+
+            EditText timeView = (EditText) findViewById(R.id.time_edit);
+            timeView.setText(opportunity.getHours());
+
+            ((EditText)autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input)).setText(opportunity.getAddress());
+        }
     }
 }
