@@ -33,6 +33,10 @@ public class Opportunity {
         this.longitude = longitude;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
