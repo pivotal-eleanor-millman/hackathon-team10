@@ -86,9 +86,10 @@ public class HelpRequestActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, MyRequestsActivity.class);
         ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
         Call<Opportunity> call;
+        Bundle params = getIntent().getExtras();
 
         //Determine whether we should create or update
-        if (getCallingActivity() != null && getCallingActivity().equals(MyRequestsActivity.class)) {
+        if (params.getString("action") != null && params.getString("action").equals("Update")) {
             call = apiService.updateOpportunity(opportunity, opportunity.getId());
         } else {
             call = apiService.createOpportunity(opportunity);

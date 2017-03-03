@@ -37,6 +37,7 @@ public class MyRequestsActivity extends AppCompatActivity {
     public void editRequest(View view) {
         final Intent intent = new Intent(this, HelpRequestActivity.class);
         intent.putExtra("opportunity", opportunity);
+        intent.putExtra("action", "Update");
         startActivity(intent);
     }
 }

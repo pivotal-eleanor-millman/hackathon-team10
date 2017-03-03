@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onNeedHelpLayoutClicked(View view) {
         Intent intent = new Intent(this, HelpRequestActivity.class);
+        intent.putExtra("action", "Create");
         startActivity(intent);
     }
 
