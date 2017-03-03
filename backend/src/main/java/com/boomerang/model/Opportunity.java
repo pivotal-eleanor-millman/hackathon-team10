@@ -20,17 +20,21 @@ public class Opportunity {
     private String description;
     private Double latitude;
     private Double longitude;
+    private String requester;
+    private Boolean accepted;
 
     public Opportunity() {
     }
 
-    public Opportunity(String title, String address, String hours, String description, Double latitude, Double longitude) {
+    public Opportunity(String title, String address, String hours, String description, Double latitude, Double longitude, String requester, Boolean accepted) {
         this.title = title;
         this.address = address;
         this.hours = hours;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.requester = requester;
+        this.accepted = accepted;
     }
 
     public Long getId() {
@@ -83,5 +87,21 @@ public class Opportunity {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getRequester() {
+        return requester;
+    }
+
+    public void setRequester(String requester) {
+        this.requester = requester;
+    }
+
+    public Boolean getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
     }
 }

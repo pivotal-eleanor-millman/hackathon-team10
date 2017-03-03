@@ -10,6 +10,8 @@ public class Opportunity implements Serializable {
     String description;
     Double latitude;
     Double longitude;
+    String requester;
+    Boolean accepted;
 
     public Opportunity() {
     }
@@ -68,6 +70,22 @@ public class Opportunity implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getRequester() {
+        return requester;
+    }
+
+    public void setRequester(String requester) {
+        this.requester = requester;
+    }
+
+    public Boolean getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
     }
 }
 

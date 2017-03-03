@@ -74,6 +74,9 @@ public class HelpRequestActivity extends AppCompatActivity {
         String hours = timeView.getText().toString();
 
         String BASE_URL = "https://boomerang-ria.cfapps.io/";
+        EditText personView = (EditText) findViewById(R.id.person_edit);
+        String person = personView.getText().toString();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -82,6 +85,7 @@ public class HelpRequestActivity extends AppCompatActivity {
         opportunity.setHours(hours);
         opportunity.setTitle(title);
         opportunity.setDescription(note);
+        opportunity.setRequester(person);
 
         final Intent intent = new Intent(this, MyRequestsActivity.class);
         ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
@@ -98,7 +102,7 @@ public class HelpRequestActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Opportunity> call, Response<Opportunity> response) {
                 Opportunity opportunityResult = response.body();
-                intent.putExtra("opportunity", opportunityResult);
+                intent.putExtra("user", opportunityResult.getRequester());
                 startActivity(intent);
             }
 
@@ -121,6 +125,9 @@ public class HelpRequestActivity extends AppCompatActivity {
 
             EditText timeView = (EditText) findViewById(R.id.time_edit);
             timeView.setText(opportunity.getHours());
+
+            EditText userView = (EditText) findViewById(R.id.person_edit);
+            userView.setText(opportunity.getRequester());
 
             ((EditText)autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input)).setText(opportunity.getAddress());
         }

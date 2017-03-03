@@ -26,6 +26,8 @@ public class DataLoader {
         String description1 = " The purpose of the Kitchen Support Volunteer is to create a warm and welcoming, home-like environment in the hub of the house - the kitchen! Kitchen Support Volunteers support the physical comfort and emotional well-being of residents and their families through food. ";
         Double latitude1 = 43.6591399;
         Double longitude1 = -79.4036288;
+        String user1 = "default";
+        Boolean accepted1 = false;
 
         String title2 = "CN Tower Call Blitz Volunteer";
         String address2 = "WWF-Canada - Toronto office\n" +
@@ -49,6 +51,8 @@ public class DataLoader {
                 "We are running a call outreach project and are looking for friendly, professional, customer service-oriented volunteers to join us in the months leading up the event to reach out to climber and share important event updates. ";
         Double latitude2 = 43.90185051;
         Double longitude2 = -79.45793152;
+        String user2 = "default";
+        Boolean accepted2 = false;
 
         String title3 = "PATH Clothing Drive Volunteer";
         String address3 = "First Canadian Place\n" +
@@ -73,6 +77,8 @@ public class DataLoader {
                 "We are seeking many reliable and energetic individuals or groups to help out throughout the week.";
         Double latitude3 = 43.6486362;
         Double longitude3 = -79.3817439;
+        String user3 = "default";
+        Boolean accepted3 = false;
 
         String title4 = "Volunteer Greeter";
         String address4 = "St. Michael's Hospital, 30 Bond St, Toronto, ON M5B 1W8";
@@ -82,10 +88,12 @@ public class DataLoader {
                 "To help them, we are recruiting special volunteers to serve as greeters, guides and general problem solvers.";
         Double latitude4 = 43.6534274;
         Double longitude4 = -79.3777415;
+        String user4 = "default";
+        Boolean accepted4 = false;
 
-        repository.save(new Opportunity(title1, address1, hours1, description1, latitude1, longitude1));
-        repository.save(new Opportunity(title2, address2, hours2, description2, latitude2, longitude2));
-        repository.save(new Opportunity(title3, address3, hours3, description3, latitude3, longitude3));
-        repository.save(new Opportunity(title4, address4, hours4, description4, latitude4, longitude4));
+        repository.save(new Opportunity(title1, address1, hours1, description1, latitude1, longitude1, user1, accepted1));
+        repository.save(new Opportunity(title2, address2, hours2, description2, latitude2, longitude2, user2, accepted2));
+        repository.save(new Opportunity(title3, address3, hours3, description3, latitude3, longitude3, user3, accepted3));
+        repository.save(new Opportunity(title4, address4, hours4, description4, latitude4, longitude4, user4, accepted4));
     }
 }

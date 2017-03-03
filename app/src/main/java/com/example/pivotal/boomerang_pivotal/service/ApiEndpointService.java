@@ -30,5 +30,8 @@ public interface ApiEndpointService {
 
     @GET("/opportunities")
     Call<OpportunitiesResponse> getAllOpportunities();
+
+    @GET("/opportunities/search/findByRequester")
+    Call<OpportunitiesResponse> getOpportunitiesByUser(@Query("requester") String requester);
 }
 
