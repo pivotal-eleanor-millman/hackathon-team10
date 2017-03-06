@@ -25,7 +25,8 @@
             android:hint="@string/title_default"
             android:drawableLeft="@mipmap/ic_help_black"
             android:drawablePadding="20dp"
-            android:padding="25dp"/>
+            android:padding="25dp"
+            android:inputType="textCapSentences" />
         <fragment
             android:id="@+id/place_autocomplete_fragment"
             android:layout_width="match_parent"
@@ -38,7 +39,8 @@
             android:hint="@string/username_default"
             android:drawableLeft="@mipmap/ic_person"
             android:drawablePadding="20dp"
-            android:padding="25dp"/>
+            android:padding="25dp"
+            android:inputType="textCapSentences" />
         <EditText
             android:id="@+id/time_edit"
             android:layout_width="match_parent"
@@ -46,7 +48,8 @@
             android:hint="@string/time_default"
             android:drawableLeft="@mipmap/ic_time"
             android:drawablePadding="20dp"
-            android:padding="25dp"/>
+            android:padding="25dp"
+            android:inputType="textCapSentences" />
         <EditText
             android:id="@+id/note_edit"
             android:layout_width="match_parent"
@@ -54,7 +57,8 @@
             android:hint="@string/description_default"
             android:drawableLeft="@mipmap/ic_note"
             android:drawablePadding="20dp"
-            android:padding="25dp"/>
+            android:padding="25dp"
+            android:inputType="textCapSentences" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

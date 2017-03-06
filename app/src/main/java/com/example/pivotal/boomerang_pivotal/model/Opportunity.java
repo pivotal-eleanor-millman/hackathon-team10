@@ -80,7 +80,7 @@ public class Opportunity implements Serializable {
         this.requester = requester;
     }
 
-    public Boolean getAccepted() {
+    public Boolean isAccepted() {
         return accepted;
     }
 

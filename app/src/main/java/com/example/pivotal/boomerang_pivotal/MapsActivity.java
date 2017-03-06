@@ -76,10 +76,7 @@ public class MapsActivity extends AppCompatActivity
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Opportunity opportunity = (Opportunity) marker.getTag();
-                intent.putExtra("title", opportunity.getTitle());
-                intent.putExtra("address", opportunity.getAddress());
-                intent.putExtra("hours", opportunity.getHours());
-                intent.putExtra("description", opportunity.getDescription());
+                intent.putExtra("opportunity", opportunity);
                 startActivity(intent);
             }
         });

@@ -25,8 +25,11 @@ public class OpportunityAdapter extends ArrayAdapter<Opportunity>{
         }
         TextView nameTextView = (TextView) convertView.findViewById(R.id.requestTitle);
         TextView descriptionTextView = (TextView) convertView.findViewById(R.id.requestDescription);
+        TextView statusTextView = (TextView) convertView.findViewById(R.id.requestStatus);
         nameTextView.setText(opportunity.getTitle());
         descriptionTextView.setText(opportunity.getDescription());
+        statusTextView.setText(opportunity.isAccepted() ? "Volunteer Found" : "Waiting for a Volunteer");
+        statusTextView.setCompoundDrawablesWithIntrinsicBounds(opportunity.isAccepted() ? R.mipmap.ic_face : R.mipmap.ic_timelapse, 0, 0, 0);
         return convertView;
     }
 }

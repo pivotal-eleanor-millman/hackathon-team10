@@ -41,7 +41,7 @@
                 android:background="@android:color/white"
                 android:padding="@dimen/activity_vertical_margin"
                 android:text="@string/need_help_description"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:lineSpacingMultiplier="1.2"
                 android:textColor="@android:color/black"/>
 
@@ -77,7 +77,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="12dp"
             android:background="@color/colorBackgroundGrey"/>
 
         <LinearLayout
@@ -102,7 +102,7 @@
                 android:background="@android:color/white"
                 android:padding="@dimen/activity_vertical_margin"
                 android:text="@string/want_to_help_description"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:lineSpacingMultiplier="1.2"
                 android:textColor="@android:color/black"/>
 

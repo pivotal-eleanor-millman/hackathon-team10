@@ -13,10 +13,6 @@ import android.widget.ListView;
 import com.example.pivotal.boomerang_pivotal.model.OpportunitiesResponse;
 import com.example.pivotal.boomerang_pivotal.model.Opportunity;
 import com.example.pivotal.boomerang_pivotal.service.ApiEndpointService;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;

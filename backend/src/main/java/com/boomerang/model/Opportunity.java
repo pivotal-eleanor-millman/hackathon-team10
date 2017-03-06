@@ -21,7 +21,7 @@ public class Opportunity {
     private Double latitude;
     private Double longitude;
     private String requester;
-    private Boolean accepted;
+    private Boolean accepted = false;
 
     public Opportunity() {
     }

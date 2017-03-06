@@ -46,6 +46,12 @@
                 android:drawableLeft="@mipmap/ic_note"
                 android:drawablePadding="20dp"
                 android:padding="25dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volunteer"
+                android:background="@color/colorPrimary"
+                android:onClick="onVolunteerClicked"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
