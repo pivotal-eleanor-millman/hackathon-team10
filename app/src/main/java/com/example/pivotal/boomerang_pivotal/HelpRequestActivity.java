@@ -73,44 +73,53 @@ public class HelpRequestActivity extends AppCompatActivity {
         EditText timeView = (EditText) findViewById(R.id.time_edit);
         String hours = timeView.getText().toString();
 
-        String BASE_URL = "https://boomerang-ria.cfapps.io/";
         EditText personView = (EditText) findViewById(R.id.person_edit);
         String person = personView.getText().toString();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        opportunity.setHours(hours);
-        opportunity.setTitle(title);
-        opportunity.setDescription(note);
-        opportunity.setRequester(person);
-
-        final Intent intent = new Intent(this, MyRequestsActivity.class);
-        ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
-        Call<Opportunity> call;
-        Bundle params = getIntent().getExtras();
-
-        //Determine whether we should create or update
-        if (params.getString("action") != null && params.getString("action").equals("Update")) {
-            call = apiService.updateOpportunity(opportunity, opportunity.getId());
+        if (note.trim().equals("")) {
+            noteView.setError("Description is required!");
+        } else if (title.trim().equals("")) {
+            titleView.setError("Title is required!");
+        } else if (person.trim().equals("")) {
+            personView.setError("Username is required!");
         } else {
-            call = apiService.createOpportunity(opportunity);
-        }
-        call.enqueue(new Callback<Opportunity>() {
-            @Override
-            public void onResponse(Call<Opportunity> call, Response<Opportunity> response) {
-                Opportunity opportunityResult = response.body();
-                intent.putExtra("user", opportunityResult.getRequester());
-                startActivity(intent);
-            }
 
-            @Override
-            public void onFailure(Call<Opportunity> call, Throwable throwable) {
-                Log.i("CreateOpportunity", "An error occurred: " + throwable.getLocalizedMessage());
+        String BASE_URL = "https://boomerang-ria.cfapps.io/";
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            opportunity.setHours(hours);
+            opportunity.setTitle(title);
+            opportunity.setDescription(note);
+            opportunity.setRequester(person);
+
+            final Intent intent = new Intent(this, MyRequestsActivity.class);
+            ApiEndpointService apiService = retrofit.create(ApiEndpointService.class);
+            Call<Opportunity> call;
+            Bundle params = getIntent().getExtras();
+
+            //Determine whether we should create or update
+            if (params.getString("action") != null && params.getString("action").equals("Update")) {
+                call = apiService.updateOpportunity(opportunity, opportunity.getId());
+            } else {
+                call = apiService.createOpportunity(opportunity);
             }
-        });
+            call.enqueue(new Callback<Opportunity>() {
+                @Override
+                public void onResponse(Call<Opportunity> call, Response<Opportunity> response) {
+                    Opportunity opportunityResult = response.body();
+                    intent.putExtra("user", opportunityResult.getRequester());
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFailure(Call<Opportunity> call, Throwable throwable) {
+                    Log.i("CreateOpportunity", "An error occurred: " + throwable.getLocalizedMessage());
+                }
+            });
+        }
     }
 
     private void prepopulateOpportunity(PlaceAutocompleteFragment autocompleteFragment){
